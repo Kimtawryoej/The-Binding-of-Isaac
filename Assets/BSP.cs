@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BSP : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class BSP : MonoBehaviour
     [SerializeField] private float minimumDevideRate;
     [SerializeField] private float maximumDivideRate;
     [SerializeField] private int maximumDepth;
-
+    //Tilemap
     void Start()
     {
         DrawMap(0, 0);
@@ -109,22 +110,16 @@ public class BSP : MonoBehaviour
         if (count == maximumDepth) return;
 
         Debug.Log(node.NodeRect.center);
-        Vector2Int leftNodeCenter = (count == maximumDepth - 1) ? node.LeftNode.RoomCenter : node.LeftNode.Center;
-        Vector2Int rightNodeCenter = (count == maximumDepth - 1) ? node.RightNode.RoomCenter : node.RightNode.Center; ;
-        DrawConnectLine(new Vector2(node.Center.x, node.Center.y), new Vector2(leftNodeCenter.x, leftNodeCenter.y));
-        DrawConnectLine(new Vector2(node.Center.x, node.Center.y), new Vector2(rightNodeCenter.x, rightNodeCenter.y));
+        //Vector2Int leftNodeCenter = (count == maximumDepth - 1) ? node.LeftNode.RoomCenter : node.LeftNode.Center;
+        //Vector2Int rightNodeCenter = (count == maximumDepth - 1) ? node.RightNode.RoomCenter : node.RightNode.Center; ;
+        //DrawConnectLine(new Vector2(node.Center.x, node.Center.y), new Vector2(leftNodeCenter.x, leftNodeCenter.y));
+        //DrawConnectLine(new Vector2(node.Center.x, node.Center.y), new Vector2(rightNodeCenter.x, rightNodeCenter.y));
+        Vector2Int leftNodeCenter = node.LeftNode.Center;
+        Vector2Int rightNodeCenter = node.RightNode.Center;
+        DrawConnectLine(new Vector2(leftNodeCenter.x, leftNodeCenter.y), new Vector2(rightNodeCenter.x, leftNodeCenter.y));
+        DrawConnectLine(new Vector2(rightNodeCenter.x, leftNodeCenter.y), new Vector2(rightNodeCenter.x, rightNodeCenter.y));
         ConnectLine(node.LeftNode, count + 1);
         ConnectLine(node.RightNode, count + 1);
-        //DrawConnectLine(new Vector2(leftNodeCenter.x, leftNodeCenter.y), new Vector2(rightNodeCenter.x, leftNodeCenter.y));
-        //DrawConnectLine(new Vector2(rightNodeCenter.x, leftNodeCenter.y), new Vector2(rightNodeCenter.x, rightNodeCenter.y));
-        //else if (count == maximumDepth - 1)
-        //{
-        //}
-        //else
-        //{
-        //    ConnectLine(node.leftNode, count + 1);
-        //    ConnectLine(node.rightNode, count + 1);
-        //}
 
         void DrawConnectLine(Vector2 nodeRoom, Vector2 room)
         {
@@ -140,8 +135,8 @@ public class Node
     public Node LeftNode;
     public Node RightNode;
     public Node ParNode;
-    public RectInt NodeRect; //분리된 공간의 rect정보
-    public RectInt RoomRect; //분리된 공간의 room rect정보
+    public RectInt NodeRect; 
+    public RectInt RoomRect; 
 
     public Vector2Int Center
     {
@@ -149,7 +144,6 @@ public class Node
         {
             return new Vector2Int(NodeRect.x + NodeRect.width / 2, NodeRect.y + NodeRect.height / 2);
         }
-        //방의 가운데 점. 방과 방을 이을 때 사용
     }
 
     public Vector2Int RoomCenter
@@ -158,7 +152,6 @@ public class Node
         {
             return new Vector2Int(RoomRect.x + RoomRect.width / 2, RoomRect.y + RoomRect.height / 2);
         }
-        //방의 가운데 점. 방과 방을 이을 때 사용
     }
     public Node(RectInt rect)
     {

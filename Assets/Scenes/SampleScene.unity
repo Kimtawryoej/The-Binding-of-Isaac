@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9972e72b08fa1d546ba9359c562776af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: {x: 64, y: 40}
+  mapSize: {x: 64, y: 64}
   map: {fileID: 7420089891154397176, guid: 12d6a86fc6a41dc49a1fc90e50dfa02c, type: 3}
   line: {fileID: 328332354839165783, guid: 661f453f88cd36f4c9a3beca9e3740d4, type: 3}
   room: {fileID: 328332354839165783, guid: bbdd362cc0332da4facf5670030bf8f2, type: 3}
